@@ -1,6 +1,6 @@
 import { Reveal } from "../reveal";
-import { ChartUpIcon, GoogleG, InfinityIcon, NfcWaveIcon, ThumbUpIcon } from "../icons";
-import { GlassPanel, IconBadge, Pill } from "../ui";
+import { GoogleG, InfinityIcon, NfcWaveIcon, ThumbUpIcon } from "../icons";
+import { GlassPanel } from "../ui";
 
 const REASONS = [
   {
@@ -34,16 +34,10 @@ export function WhyItWorks() {
   return (
     <section className="px-5 py-12 sm:py-16" aria-labelledby="why-title">
       <div className="mx-auto max-w-4xl text-center">
-        <Reveal>
-          <Pill tone="violet" icon={<ChartUpIcon className="h-4 w-4" />}>
-            ¿Por qué funciona?
-          </Pill>
-        </Reveal>
-
-        <Reveal delay={80} variant="mask">
+        <Reveal variant="mask">
           <h2
             id="why-title"
-            className="mt-6 font-display text-[1.7rem] font-extrabold leading-[1.2] tracking-[-0.025em] text-foreground sm:text-4xl"
+            className="font-display text-[1.7rem] font-extrabold leading-[1.2] tracking-[-0.025em] text-foreground sm:text-4xl"
           >
             Más reseñas, más confianza,
             <br className="hidden sm:block" /> más{" "}
@@ -51,14 +45,14 @@ export function WhyItWorks() {
           </h2>
         </Reveal>
 
-        <Reveal delay={150} variant="blur">
+        <Reveal delay={80} variant="blur">
           <p className="mx-auto mt-4 max-w-[32rem] text-[14px] leading-[1.65] text-muted-foreground sm:text-[15px]">
             Las reseñas positivas en Google generan confianza, atraen nuevos clientes y
             mejoran tu posicionamiento local.
           </p>
         </Reveal>
 
-        <Reveal delay={220} variant="scale">
+        <Reveal delay={150} variant="scale">
           <GlassPanel className="mt-10">
             <ul className="stagger grid grid-cols-1 gap-7 sm:grid-cols-2 lg:grid-cols-4 lg:gap-5">
               {REASONS.map((r, i) => (

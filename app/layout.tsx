@@ -17,11 +17,13 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "tag — Convierte cada visita en una reseña de 5 estrellas",
+  applicationName: "nfcee",
+  title: "nfcee — Convierte cada visita en una reseña de 5 estrellas",
   description:
     "Tarjeta NFC para negocios: tus clientes dejan una reseña en Google en segundos con solo acercar su teléfono. Sin apps, uso ilimitado, envíos a todo México.",
   openGraph: {
-    title: "tag — Más reseñas. Más clientes.",
+    siteName: "nfcee",
+    title: "nfcee — Convierte cada visita en una reseña de 5 estrellas",
     description:
       "Tarjeta NFC para reseñas de Google, Instagram y Facebook. Una reseña en menos de 10 segundos.",
     locale: "es_MX",

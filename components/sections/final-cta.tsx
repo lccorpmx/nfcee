@@ -1,6 +1,6 @@
 import { Reveal } from "../reveal";
 import { CartIcon, ShieldIcon } from "../icons";
-import { ShmoCard } from "../shmo-card";
+import { NfceeCard } from "../nfcee-card";
 import { CARD_ART } from "../card-art";
 
 export function FinalCta() {
@@ -10,19 +10,19 @@ export function FinalCta() {
         {/* Fanned card trio */}
         <Reveal variant="scale" className="order-2 md:order-1">
           <div className="anim-float mx-auto flex max-w-[300px] items-end justify-center gap-2 sm:max-w-[340px]">
-            <ShmoCard
+            <NfceeCard
               variant="google-thanks"
               imageSrc={CARD_ART["google-thanks"]}
               withStand={false}
               className="w-1/3 -rotate-[7deg]"
             />
-            <ShmoCard
+            <NfceeCard
               variant="instagram"
               imageSrc={CARD_ART["instagram"]}
               withStand={false}
               className="w-1/3 -translate-y-3"
             />
-            <ShmoCard
+            <NfceeCard
               variant="facebook"
               imageSrc={CARD_ART["facebook"]}
               withStand={false}

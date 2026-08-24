@@ -1,4 +1,8 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# nfcee
+
+Landing page de **nfcee** — tarjetas NFC para que los clientes de un negocio dejen una reseña en Google, Instagram o Facebook con solo acercar el teléfono.
+
+Proyecto [Next.js](https://nextjs.org) creado con [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 ## Getting Started
 

@@ -1,11 +1,11 @@
-import type { CardVariant } from "./shmo-card";
+import type { CardVariant } from "./nfcee-card";
 
 /**
  * Real product photography for each card face.
  *
  * Set an entry to null to fall back to the built-in CSS/SVG recreation.
  * The artwork is square (2000×2000, transparent outside the rounded corners),
- * so <ShmoCard> switches its shell to a 1:1 box and drops its own white
+ * so <NfceeCard> switches its shell to a 1:1 box and drops its own white
  * background whenever an image is present — otherwise the shell would crop
  * the sides off and show white behind the transparent corners.
  */

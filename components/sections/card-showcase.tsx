@@ -1,5 +1,5 @@
 import { Reveal } from "../reveal";
-import { ShmoCard, type CardVariant } from "../shmo-card";
+import { NfceeCard, type CardVariant } from "../nfcee-card";
 import { CARD_ART } from "../card-art";
 
 const CARDS: CardVariant[] = ["google-click", "google-thanks", "instagram", "facebook"];
@@ -36,10 +36,18 @@ export function CardShowcase() {
           <Spark className="h-9 w-9 -scale-x-100 opacity-90 sm:h-11 sm:w-11" />
         </div>
 
-        {/* Mobile: snap carousel. sm+: 4-up grid. */}
+        {/*
+          Mobile: free horizontal rail. sm+: 4-up grid.
+
+          No scroll snapping: with `x mandatory`, a vertical page scroll that
+          starts on the rail makes iOS re-snap the row, so the cards slide
+          sideways under the finger while the page moves down. `overscroll-x`
+          keeps a horizontal swipe from chaining into the page / back gesture,
+          so the rail owns sideways motion and the page owns vertical.
+        */}
         <ul
           className="
-            scrollbar-none -mx-5 flex snap-x snap-mandatory gap-4 overflow-x-auto px-5 pb-4 pt-6
+            scrollbar-none -mx-5 flex gap-4 overflow-x-auto overscroll-x-contain px-5 pb-4 pt-6
             sm:mx-0 sm:grid sm:grid-cols-4 sm:gap-4 sm:overflow-visible sm:px-0 md:gap-6
           "
         >
@@ -49,9 +57,9 @@ export function CardShowcase() {
               key={variant}
               variant="scale"
               delay={i * 110}
-              className="w-[58%] min-w-[58%] shrink-0 snap-center sm:w-auto sm:min-w-0"
+              className="w-[58%] min-w-[58%] shrink-0 sm:w-auto sm:min-w-0"
             >
-              <ShmoCard
+              <NfceeCard
                 variant={variant}
                 imageSrc={CARD_ART[variant]}
                 priority={i < 2}

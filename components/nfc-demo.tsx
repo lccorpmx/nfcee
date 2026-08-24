@@ -9,7 +9,7 @@ import {
   StarIcon,
   ThumbUpIcon,
 } from "./icons";
-import { ShmoCard, type CardVariant } from "./shmo-card";
+import { NfceeCard, type CardVariant } from "./nfcee-card";
 import { CARD_ART } from "./card-art";
 
 /* ============================================================
@@ -360,7 +360,7 @@ export function NfcDemo({ className = "" }: { className?: string }) {
                 opacity: detecting ? 1 : 0,
               }}
             />
-            <ShmoCard
+            <NfceeCard
               variant={DEST_CARD[dest]}
               imageSrc={CARD_ART[DEST_CARD[dest]]}
               withStand

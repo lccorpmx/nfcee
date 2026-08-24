@@ -11,7 +11,7 @@ import {
 
 export type CardVariant = "google-click" | "google-thanks" | "instagram" | "facebook";
 
-type ShmoCardProps = {
+type NfceeCardProps = {
   variant: CardVariant;
   /**
    * Real product photo. When set it replaces the CSS recreation entirely —
@@ -25,10 +25,10 @@ type ShmoCardProps = {
 };
 
 const LABEL: Record<CardVariant, string> = {
-  "google-click": "Tarjeta tag azul para dejar una reseña en Google",
-  "google-thanks": "Tarjeta tag negra para dejar una reseña en Google",
-  instagram: "Tarjeta tag para seguir el negocio en Instagram",
-  facebook: "Tarjeta tag para seguir el negocio en Facebook",
+  "google-click": "Tarjeta nfcee azul para dejar una reseña en Google",
+  "google-thanks": "Tarjeta nfcee negra para dejar una reseña en Google",
+  instagram: "Tarjeta nfcee para seguir el negocio en Instagram",
+  facebook: "Tarjeta nfcee para seguir el negocio en Facebook",
 };
 
 /** White wave that separates the coloured header from the card body. */
@@ -84,13 +84,13 @@ function TapAndScan() {
   );
 }
 
-export function ShmoCard({
+export function NfceeCard({
   variant,
   imageSrc,
   className = "",
   withStand = true,
   priority = false,
-}: ShmoCardProps) {
+}: NfceeCardProps) {
   /*
     The real artwork is square with transparent corners, while the CSS
     recreation is a 27:40 portrait plate. Cover-cropping a square into 27:40

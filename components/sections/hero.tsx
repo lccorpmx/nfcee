@@ -1,6 +1,6 @@
 import { Reveal } from "../reveal";
-import { BoltIcon, ClockIcon, SparkleStarIcon, StarIcon } from "../icons";
-import { IconBadge, Pill } from "../ui";
+import { BoltIcon, ClockIcon, SparkleStarIcon } from "../icons";
+import { IconBadge } from "../ui";
 import { NfcDemo } from "../nfc-demo";
 
 const PERKS = [
@@ -34,17 +34,11 @@ export function Hero() {
         */}
         <div className="grid items-center gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:gap-8">
           <div className="text-center lg:text-left">
-            <Reveal>
-              <Pill icon={<StarIcon className="h-4 w-4 text-amber-brand" />}>
-                Más reseñas. Más clientes.
-              </Pill>
-            </Reveal>
-
-            <Reveal delay={90} variant="mask">
+            <Reveal variant="mask">
               <h1
                 id="hero-title"
                 className="
-                  mt-7 font-display text-[2.15rem] font-extrabold leading-[1.12] tracking-[-0.028em]
+                  font-display text-[2.15rem] font-extrabold leading-[1.12] tracking-[-0.028em]
                   text-foreground sm:text-5xl lg:text-[3.1rem] xl:text-[3.4rem]
                 "
               >
@@ -58,15 +52,15 @@ export function Hero() {
               </h1>
             </Reveal>
 
-            <Reveal delay={170} variant="blur">
+            <Reveal delay={90} variant="blur">
               <p className="mx-auto mt-5 max-w-[34rem] text-[15px] leading-[1.65] text-muted-foreground sm:text-base lg:mx-0">
-                Con tag, tus clientes pueden dejarte una reseña de Google en segundos
+                Con nfcee, tus clientes pueden dejarte una reseña de Google en segundos
                 con solo acercar su teléfono.
               </p>
             </Reveal>
           </div>
 
-          <Reveal delay={230} variant="scale">
+          <Reveal delay={170} variant="scale">
             <NfcDemo />
           </Reveal>
         </div>
