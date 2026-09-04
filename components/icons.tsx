@@ -317,3 +317,61 @@ export function QrMark({ className = "" }: { className?: string }) {
     </svg>
   );
 }
+
+/* ============================================================
+   Link builder — /linkmap
+   ============================================================ */
+
+export function SearchIcon({ className = "", ...props }: IconProps) {
+  return (
+    <svg viewBox="0 0 24 24" className={className} aria-hidden="true" {...props}>
+      <circle {...stroke} cx="11" cy="11" r="6.5" />
+      <path {...stroke} strokeWidth="2" d="m16 16 4.5 4.5" />
+    </svg>
+  );
+}
+
+export function CopyIcon({ className = "", ...props }: IconProps) {
+  return (
+    <svg viewBox="0 0 24 24" className={className} aria-hidden="true" {...props}>
+      <rect {...stroke} x="9" y="9" width="11" height="11" rx="2.6" />
+      <path {...stroke} d="M15 6.2A2.2 2.2 0 0 0 12.8 4H6.2A2.2 2.2 0 0 0 4 6.2v6.6A2.2 2.2 0 0 0 6.2 15" />
+    </svg>
+  );
+}
+
+export function ExternalLinkIcon({ className = "", ...props }: IconProps) {
+  return (
+    <svg viewBox="0 0 24 24" className={className} aria-hidden="true" {...props}>
+      <path {...stroke} d="M18.5 13.6v5.1a1.8 1.8 0 0 1-1.8 1.8H5.3a1.8 1.8 0 0 1-1.8-1.8V7.3a1.8 1.8 0 0 1 1.8-1.8h5.1" />
+      <path {...stroke} d="M14.4 3.5h6.1v6.1M20.5 3.5 11 13" />
+    </svg>
+  );
+}
+
+export function MapPinIcon({ className = "", ...props }: IconProps) {
+  return (
+    <svg viewBox="0 0 24 24" className={className} aria-hidden="true" {...props}>
+      <path {...stroke} d="M12 21.2c4.2-4.3 6.3-7.7 6.3-10.3a6.3 6.3 0 1 0-12.6 0c0 2.6 2.1 6 6.3 10.3Z" />
+      <circle {...stroke} cx="12" cy="10.7" r="2.4" />
+    </svg>
+  );
+}
+
+export function AlertIcon({ className = "", ...props }: IconProps) {
+  return (
+    <svg viewBox="0 0 24 24" className={className} aria-hidden="true" {...props}>
+      <circle {...stroke} cx="12" cy="12" r="9" />
+      <path {...stroke} strokeWidth="2.1" d="M12 7.4v5.4m0 3.5v.1" />
+    </svg>
+  );
+}
+
+export function LogoutIcon({ className = "", ...props }: IconProps) {
+  return (
+    <svg viewBox="0 0 24 24" className={className} aria-hidden="true" {...props}>
+      <path {...stroke} d="M15 4.5h3.3a1.7 1.7 0 0 1 1.7 1.7v11.6a1.7 1.7 0 0 1-1.7 1.7H15" />
+      <path {...stroke} d="M10.5 15.5 14 12l-3.5-3.5M14 12H4" />
+    </svg>
+  );
+}
