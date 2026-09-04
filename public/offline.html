@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="es-MX">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#f7f5f3" />
+    <title>Sin conexión — nfcee</title>
+    <!--
+      Autocontenida a propósito: es lo que se ve justo cuando no hay red,
+      así que no puede depender de una hoja de estilo ni de una fuente que
+      habría que ir a buscar. Los colores son los tokens de globals.css.
+    -->
+    <style>
+      :root {
+        --background: #f7f5f3;
+        --foreground: #101a3a;
+        --muted: #525a72;
+      }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        min-height: 100dvh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 24px;
+        background: var(--background);
+        color: var(--foreground);
+        font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+        -webkit-font-smoothing: antialiased;
+      }
+      main { max-width: 22rem; text-align: center; }
+      .mark {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 68px;
+        height: 68px;
+        border-radius: 999px;
+        color: #fff;
+        background: linear-gradient(100deg, #6d28d9 0%, #4f46e5 45%, #2563eb 100%);
+        box-shadow: 0 14px 30px -14px rgba(16, 26, 58, 0.55);
+      }
+      h1 {
+        margin: 22px 0 0;
+        font-size: 1.4rem;
+        font-weight: 800;
+        letter-spacing: -0.02em;
+        line-height: 1.25;
+      }
+      p {
+        margin: 10px 0 0;
+        font-size: 0.9rem;
+        line-height: 1.6;
+        color: var(--muted);
+      }
+      button {
+        margin-top: 26px;
+        min-height: 48px;
+        width: 100%;
+        border: 0;
+        border-radius: 999px;
+        padding: 0 28px;
+        font: inherit;
+        font-size: 0.92rem;
+        font-weight: 600;
+        color: #fff;
+        cursor: pointer;
+        background: linear-gradient(100deg, #6d28d9 0%, #4f46e5 45%, #2563eb 100%);
+        box-shadow: 0 10px 22px -10px rgba(16, 26, 58, 0.55);
+      }
+      button:active { transform: scale(0.98); }
+      @media (prefers-reduced-motion: reduce) {
+        button:active { transform: none; }
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <span class="mark" aria-hidden="true">
+        <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor"
+             stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M7.5 8.4a5 5 0 0 1 0 7.2" />
+          <path d="M11 5.6a9 9 0 0 1 0 12.8" />
+          <path d="M14.5 2.8a13 13 0 0 1 0 18.4" />
+          <circle cx="4.4" cy="12" r="1.5" fill="currentColor" stroke="none" />
+        </svg>
+      </span>
+
+      <h1>Sin conexión</h1>
+      <p>
+        No pudimos cargar esta pantalla porque el teléfono no tiene red.
+        Reconéctate y vuelve a intentarlo.
+      </p>
+
+      <button type="button" onclick="location.reload()">Reintentar</button>
+    </main>
+
+    <!-- Al volver la red, se recarga sola: nadie tiene que estar vigilando. -->
+    <script>
+      addEventListener("online", function () {
+        location.reload();
+      });
+    </script>
+  </body>
+</html>

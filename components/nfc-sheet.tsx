@@ -100,7 +100,11 @@ export function NfcSheet({ nfc }: { nfc: NfcController }) {
         />
 
         {job !== null ? (
-          <Waiting kind={job} onCancel={nfc.cancel} />
+          <Waiting
+            kind={job}
+            awaitingPermission={nfc.awaitingPermission}
+            onCancel={nfc.cancel}
+          />
         ) : outcome ? (
           <Outcome nfc={nfc} />
         ) : null}
@@ -113,34 +117,54 @@ export function NfcSheet({ nfc }: { nfc: NfcController }) {
    Esperando el tag
    ------------------------------------------------------------ */
 
-function Waiting({ kind, onCancel }: { kind: NfcJobKind; onCancel: () => void }) {
+function Waiting({
+  kind,
+  awaitingPermission,
+  onCancel,
+}: {
+  kind: NfcJobKind;
+  awaitingPermission: boolean;
+  onCancel: () => void;
+}) {
   const copy = WAITING_COPY[kind];
 
   return (
     <div className="text-center">
       <span className="relative mx-auto flex h-20 w-20 items-center justify-center">
-        {/* Dos anillos desfasados sobre el mismo keyframe del resto del sitio. */}
-        {[0, 1].map((i) => (
-          <span
-            key={i}
-            aria-hidden="true"
-            className="absolute inset-0 rounded-full bg-violet-500/25"
-            style={{ animation: `nfc-ping 1.6s ease-out ${i * 0.55}s infinite` }}
-          />
-        ))}
-        <span className="relative flex h-14 w-14 items-center justify-center rounded-full bg-violet-600 text-white">
+        {/* Los anillos sólo laten mientras el lector de verdad está buscando.
+            Quietos mientras falta el permiso: nada se está leyendo todavía. */}
+        {!awaitingPermission &&
+          [0, 1].map((i) => (
+            <span
+              key={i}
+              aria-hidden="true"
+              className="absolute inset-0 rounded-full bg-violet-500/25"
+              style={{ animation: `nfc-ping 1.6s ease-out ${i * 0.55}s infinite` }}
+            />
+          ))}
+        <span
+          className={`
+            relative flex h-14 w-14 items-center justify-center rounded-full text-white
+            transition-colors duration-300
+            ${awaitingPermission ? "bg-slate-300" : "bg-violet-600"}
+          `}
+        >
           <NfcWaveIcon className="h-7 w-7" />
         </span>
       </span>
 
       <p className="mt-5 font-display text-[17px] font-extrabold tracking-[-0.01em] text-foreground">
-        {copy.title}
+        {awaitingPermission ? "Falta aceptar el permiso" : copy.title}
       </p>
       <p className="mx-auto mt-1.5 max-w-[22rem] text-[13.5px] leading-[1.6] text-muted-foreground">
-        {copy.hint}
+        {awaitingPermission
+          ? "Chrome está pidiendo permiso para usar el NFC. Acéptalo y la herramienta empieza a buscar el tag."
+          : copy.hint}
       </p>
       <p className="mt-2 text-[12.5px] leading-snug text-slate-400">
-        El lector suele estar en la parte de atrás, cerca de la cámara.
+        {awaitingPermission
+          ? "Todavía no acerques el tag: no se lee nada hasta que aceptes."
+          : "El lector suele estar en la parte de atrás, cerca de la cámara."}
       </p>
 
       <button

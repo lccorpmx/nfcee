@@ -212,6 +212,54 @@ function describeError(error: unknown): { title: string; detail?: string } {
 }
 
 /* ------------------------------------------------------------
+   Permiso
+   ------------------------------------------------------------
+   `scan()` y `write()` levantan el aviso de permiso de Chrome y
+   no arman el lector hasta que alguien lo acepta. Cronometrar la
+   espera del tag desde antes le descuenta a la operación todo el
+   tiempo que tardas en decir que sí — y si te tardabas, la espera
+   se cancelaba sola justo cuando el lector acababa de encenderse.
+   ------------------------------------------------------------ */
+
+/**
+ * Se resuelve cuando el permiso de NFC deja de estar en "prompt".
+ * `onPrompt` sólo se llama si de verdad hay un aviso en pantalla,
+ * para que la interfaz pida aceptarlo en vez de pedir el tag.
+ *
+ * Si el navegador no sabe responder por el permiso, se resuelve de
+ * inmediato: se prefiere un cronómetro de más a una espera eterna.
+ */
+async function awaitPermission(signal: AbortSignal, onPrompt: () => void): Promise<void> {
+  if (!navigator.permissions) return;
+
+  let status: PermissionStatus;
+  try {
+    // "nfc" no está en el union `PermissionName` que trae TypeScript.
+    status = await navigator.permissions.query({ name: "nfc" as PermissionName });
+  } catch {
+    return;
+  }
+
+  if (status.state !== "prompt" || signal.aborted) return;
+  onPrompt();
+
+  await new Promise<void>((resolve) => {
+    function done() {
+      status.removeEventListener("change", onChange);
+      signal.removeEventListener("abort", done);
+      resolve();
+    }
+    function onChange() {
+      // "denied" también cierra la espera: `scan()` ya viene en camino a fallar.
+      if (status.state !== "prompt") done();
+    }
+
+    status.addEventListener("change", onChange);
+    signal.addEventListener("abort", done, { once: true });
+  });
+}
+
+/* ------------------------------------------------------------
    Hook
    ------------------------------------------------------------ */
 
@@ -233,6 +281,8 @@ export type NfcController = {
   support: NfcSupport;
   /** Operación en curso, o `null` si no hay ninguna. */
   job: NfcJobKind | null;
+  /** El aviso de permiso de Chrome está en pantalla: aún no se busca el tag. */
+  awaitingPermission: boolean;
   outcome: NfcOutcome | null;
   /** Comprueba que el teléfono ve el tag y responde. */
   test: () => void;
@@ -249,6 +299,7 @@ export type NfcController = {
 export function useNfc(): NfcController {
   const [support, setSupport] = useState<NfcSupport>("checking");
   const [job, setJob] = useState<NfcJobKind | null>(null);
+  const [awaitingPermission, setAwaitingPermission] = useState(false);
   const [outcome, setOutcome] = useState<NfcOutcome | null>(null);
 
   /* Una sola operación a la vez. El controlador vive en un ref porque
@@ -281,10 +332,29 @@ export function useNfc(): NfcController {
 
       setJob(kind);
       setOutcome(null);
+      setAwaitingPermission(false);
 
-      const timer = setTimeout(() => {
-        controller.abort(new DOMException("Se agotó el tiempo de espera.", "TimeoutError"));
-      }, TAG_TIMEOUT_MS);
+      /* El cronómetro se arma una sola vez, y no antes de que el permiso
+         esté resuelto: los 30 s son para encontrar el tag, no para leer
+         el aviso de Chrome. */
+      let timer: ReturnType<typeof setTimeout> | null = null;
+      const armTimeout = () => {
+        if (timer !== null || controller.signal.aborted) return;
+        timer = setTimeout(() => {
+          controller.abort(new DOMException("Se agotó el tiempo de espera.", "TimeoutError"));
+        }, TAG_TIMEOUT_MS);
+      };
+
+      const current = () => pending.current === controller;
+
+      void awaitPermission(controller.signal, () => {
+        if (current()) setAwaitingPermission(true);
+      })
+        .catch(() => {})
+        .finally(() => {
+          if (current()) setAwaitingPermission(false);
+          armTimeout();
+        });
 
       void task(controller.signal)
         .then((result) => {
@@ -302,7 +372,8 @@ export function useNfc(): NfcController {
           setOutcome({ tone: "error", kind, title, detail });
         })
         .finally(() => {
-          clearTimeout(timer);
+          if (timer !== null) clearTimeout(timer);
+          if (current()) setAwaitingPermission(false);
           /* `scan()` no se detiene sola: sin este abort, el lector de una
              lectura ya resuelta se queda sondeando el chip para siempre.
              Los manejadores ya corrieron, así que abortar aquí no altera
@@ -414,5 +485,16 @@ export function useNfc(): NfcController {
     });
   }, [run]);
 
-  return { support, job, outcome, test, read, write, erase, cancel, clear };
+  return {
+    support,
+    job,
+    awaitingPermission,
+    outcome,
+    test,
+    read,
+    write,
+    erase,
+    cancel,
+    clear,
+  };
 }

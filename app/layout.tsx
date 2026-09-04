@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Inter, Poppins } from "next/font/google";
 import { ScrollProgress } from "@/components/scroll-progress";
+import { ServiceWorker } from "@/components/service-worker";
 import "./globals.css";
 
 const poppins = Poppins({
@@ -21,6 +22,13 @@ export const metadata: Metadata = {
   title: "nfcee — Convierte cada visita en una reseña de 5 estrellas",
   description:
     "Tarjeta NFC para negocios: tus clientes dejan una reseña en Google en segundos con solo acercar su teléfono. Sin apps, uso ilimitado, envíos a todo México.",
+  /* Instalada en la pantalla de inicio de un iPhone, la app se abre sin la
+     barra de Safari. En Android eso lo decide `display` del manifiesto. */
+  appleWebApp: {
+    capable: true,
+    title: "nfcee",
+    statusBarStyle: "default",
+  },
   openGraph: {
     siteName: "nfcee",
     title: "nfcee — Convierte cada visita en una reseña de 5 estrellas",
@@ -56,6 +64,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           }}
         />
         <ScrollProgress />
+        <ServiceWorker />
         {children}
       </body>
     </html>
