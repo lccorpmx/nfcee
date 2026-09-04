@@ -375,3 +375,54 @@ export function LogoutIcon({ className = "", ...props }: IconProps) {
     </svg>
   );
 }
+
+/* ============================================================
+   Herramienta NFC
+   ============================================================ */
+
+export function LinkIcon({ className = "", ...props }: IconProps) {
+  return (
+    <svg viewBox="0 0 24 24" className={className} aria-hidden="true" {...props}>
+      <path {...stroke} d="M10.2 13.8a3.8 3.8 0 0 0 5.6.3l2.6-2.6a3.8 3.8 0 0 0-5.4-5.4l-1.5 1.5" />
+      <path {...stroke} d="M13.8 10.2a3.8 3.8 0 0 0-5.6-.3l-2.6 2.6a3.8 3.8 0 0 0 5.4 5.4l1.5-1.5" />
+    </svg>
+  );
+}
+
+export function LinkOffIcon({ className = "", ...props }: IconProps) {
+  return (
+    <svg viewBox="0 0 24 24" className={className} aria-hidden="true" {...props}>
+      <path {...stroke} d="M14.4 9.6a3.8 3.8 0 0 1 3.9 6.2l-1.4 1.4" />
+      <path {...stroke} d="M9.6 14.4a3.8 3.8 0 0 1-3.9-6.2l1.4-1.4" />
+      <path {...stroke} strokeWidth="2" d="M3.5 3.5l17 17" />
+    </svg>
+  );
+}
+
+export function EyeIcon({ className = "", ...props }: IconProps) {
+  return (
+    <svg viewBox="0 0 24 24" className={className} aria-hidden="true" {...props}>
+      <path {...stroke} d="M2.6 12S6 5.8 12 5.8 21.4 12 21.4 12 18 18.2 12 18.2 2.6 12 2.6 12Z" />
+      <circle {...stroke} cx="12" cy="12" r="2.9" />
+    </svg>
+  );
+}
+
+export function XIcon({ className = "", ...props }: IconProps) {
+  return (
+    <svg viewBox="0 0 24 24" className={className} aria-hidden="true" {...props}>
+      <path {...stroke} strokeWidth="2.2" d="m6.4 6.4 11.2 11.2M17.6 6.4 6.4 17.6" />
+    </svg>
+  );
+}
+
+/** Chip de contacto: representa el tag físico, no la señal. */
+export function ChipIcon({ className = "", ...props }: IconProps) {
+  return (
+    <svg viewBox="0 0 24 24" className={className} aria-hidden="true" {...props}>
+      <rect {...stroke} x="6.2" y="6.2" width="11.6" height="11.6" rx="2.6" />
+      <rect {...stroke} x="9.9" y="9.9" width="4.2" height="4.2" rx="1.1" />
+      <path {...stroke} d="M9.4 3.2v3M14.6 3.2v3M9.4 17.8v3M14.6 17.8v3M3.2 9.4h3M3.2 14.6h3M17.8 9.4h3M17.8 14.6h3" />
+    </svg>
+  );
+}
